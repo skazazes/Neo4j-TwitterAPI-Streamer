@@ -12,7 +12,7 @@ Tweets, Users, Tweet Sources, URL's and Hashtags are all made into py2neo nodes 
 ## Graph Model
 The graph schema is closely modeled off of the schema used in the official 'Russian Trolls' Neo4J sandbox, with the addition of the User-RETWEETS->User relationship and removal of the trolls node and associated relationships.
 
-![Graph Schema](https://i.imgur.com/diIdqQq.png)
+![Graph Schema](https://i.imgur.com/sPb0hsM.png)
 
 ## Config
 A default config file (empty_config.ini) is provided. Once the required settings are given the file must be renamed to 'config.ini'.
