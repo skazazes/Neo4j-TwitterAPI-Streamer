@@ -1,0 +1,10 @@
+# Ignore python things
+*/__pycache__/
+__pycache__/
+venv/
+
+# Ignore test scripts directory
+scripts/
+
+# Ignore personal config file
+config.ini
