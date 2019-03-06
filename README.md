@@ -28,12 +28,20 @@ The application also requires a user with access to the server, I suggested that
 
 #### The required settings are as follows:
 [Twitter API Settings]
+
 API_KEY = 'Consumer API Key'
+
 API_SECRET = 'Consumer API Secret Key'
+
 ACCESS_TOKEN = 'Access Token'
+
 ACCESS_TOKEN_SECRET = 'Access Token Secret'
 
+
 [Neo4J Settings]
+
 NEO4J_HOST = 'Neo4J Server Access URL (Only Bolt connections have been tested)'
+
 NEO4J_USER = 'Neo4J Username'
+
 NEO4J_PASSWORD = 'Neo4J Password'
