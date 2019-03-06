@@ -10,13 +10,15 @@ Tweets, Users, Tweet Sources, URL's and Hashtags are all made into py2neo nodes 
 
 
 ## Graph Model
+The graph schema is closely modeled off of the schema used in the official 'Russian Trolls' Neo4J sandbox, with the addition of the User-RETWEETS->User relationship and removal of the trolls node and associated relationships
 
+![Graph Schema](https://i.imgur.com/qS0bciw.png)
 
 ## Config
 A default config file (empty_config.ini) is provided. Once the required settings are given the file must be renamed to 'config.ini'.
 
 #### Twitter
-In order to user the Twitter API, the user is required to apply as a Twitter application developer at [dev.twitter.com](https://developer.twitter.com/) (applications are instantly accepted from what I can tell), and then register an app within their developer dashboard. Once the application is created, navigate to it's 'Keys and Tokens' page and generate the required keys/tokens.
+In order to use the Twitter API, the user is required to apply as a Twitter application developer at [dev.twitter.com](https://developer.twitter.com/) (applications are instantly accepted from what I can tell), and then register an app within their developer dashboard. Once the application is created, navigate to it's 'Keys and Tokens' page and generate the required keys/tokens.
 
 #### Neo4J
 The user must also have access to a Neo4J server. This can reside on the local machine or a remote one requiring the proper settings have been applied on the remote server to allow inbound remote connections. I have tested against both local and remote server instances, but only using Neo4J's binary protocol 'Bolt'; there is a http, and https protocol available and should work fine, but I have never used it so YMMV. The protocol used is determined via the NEO4J_HOST setting provided by the user. A bolt example is 'bolt://XXX.XXX.XXX.XXX:7687'  
