@@ -1,4 +1,4 @@
-# Neo4J Tweepy Streamer
+ # Neo4J Tweepy Streamer
 Write tweets having to do with a list of terms to a graph database. Uses the Twitter Application API and Neo4J
 ## Status
 At the moment the project is in a state of development and as such is not currently functional in its entirety. Individual parts are implemented, and I have successfully gotten everything working myself but as it is this repository is not in working order.
@@ -34,14 +34,16 @@ The application also requires a user with access to the server, I suggested that
 ##### The required settings are as follows:
 ```ini
 [Twitter API Settings]  
-API_KEY = 'Consumer API Key'  
-API_SECRET = 'Consumer API Secret Key'  
-ACCESS_TOKEN = 'Access Token'  
-ACCESS_TOKEN_SECRET = 'Access Token Secret'  
+API_KEY = Consumer API Key  
+API_SECRET = Consumer API Secret Key  
+ACCESS_TOKEN = Access Token  
+ACCESS_TOKEN_SECRET = Access Token Secret  
 
 
 [Neo4J Settings]  
-NEO4J_HOST = 'Neo4J Server Access URL (Only Bolt connections have been tested)'  
-NEO4J_USER = 'Neo4J Username'  
-NEO4J_PASSWORD = 'Neo4J Password'  
+NEO4J_HOST = Neo4J Server Access URL (Only Bolt connections have been tested)  
+NEO4J_USER = Neo4J Username  
+NEO4J_PASSWORD = Neo4J Password  
+NEO4J_PORT = Neo4J Port  
+NEO4J_SCHEME = Neo4J Scheme (http, https, bolt)  
 ```

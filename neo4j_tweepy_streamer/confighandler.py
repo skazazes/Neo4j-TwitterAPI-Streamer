@@ -42,6 +42,12 @@ class Config(object):
     NEO4J_PASSWORD = (
         config['Neo4J Settings']['NEO4J_PASSWORD']
         )
+    NEO4J_SCHEME = (
+        config['Neo4J Settings']['NEO4J_SCHEME']
+    )
+    NEO4J_PORT = (
+        config['Neo4J Settings']['NEO4J_PORT']
+    )
 
     def set_settings(settings: dict):
         for key in settings:
@@ -67,3 +73,9 @@ class Config(object):
 
     def set_neo4j_password(password: str):
         Config.NEO4J_PASSWORD = password
+
+    def set_neo4j_scheme(scheme: str):
+        Config.NEO4J_SCHEME = scheme
+
+    def set_neo4j_port(port: int):
+        Config.NEO4J_PORT = port

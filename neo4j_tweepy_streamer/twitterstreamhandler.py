@@ -1,6 +1,5 @@
 from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
-import json
 
 from confighandler import Config
 
@@ -43,3 +42,6 @@ class TwitterStreamHandler(object):
 
     def set_write_tweet_method(self, method: callable):
         self.twitter_stream_listener.on_data = method
+
+    def start_filter(self, filter: list, use_async: bool):
+        self.twitter_stream.start_filter(filter, use_async)
