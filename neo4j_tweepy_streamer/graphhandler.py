@@ -1,5 +1,6 @@
 from py2neo import Graph, Node, Relationship
 from copy import deepcopy
+import json
 
 from confighandler import Config
 
@@ -146,8 +147,8 @@ class GraphHandler(object):
                                auth=(Config.NEO4J_USER,
                                      Config.NEO4J_PASSWORD))
 
-    def on_tweet(self, tweet: dict):
-        self.write_tweet_and_subtweets(tweet)
+    def on_data(self, extra, tweet):
+        self.write_tweet_and_subtweets(json.loads(tweet))
         return True
 
     def write_tweet_and_subtweets(self,
@@ -157,16 +158,18 @@ class GraphHandler(object):
         # Go to deepest tweet, recall on self if current tweet is deepest
         if check_retweet:
             if 'retweeted_status' in tweet:
-                self.check_for_subtweets(tweet['retweeted_status'], True, True)
-                self.check_for_subtweets(tweet, False, True)
+                self.write_tweet_and_subtweets(tweet['retweeted_status'],
+                                               True, True)
+                self.write_tweet_and_subtweets(tweet, False, True)
             else:
-                self.check_for_subtweets(tweet, False, True)
+                self.write_tweet_and_subtweets(tweet, False, True)
         elif check_quote_tweet:
             if 'quoted_status' in tweet:
-                self.check_for_subtweets(tweet['quoted_status'], True, False)
-                self.check_for_subtweets(tweet, False, False)
+                self.write_tweet_and_subtweets(tweet['quoted_status'],
+                                               True, False)
+                self.write_tweet_and_subtweets(tweet, False, False)
             else:
-                self.check_for_subtweets(tweet, False, False)
+                self.write_tweet_and_subtweets(tweet, False, False)
         else:
             self.write_tweet(tweet)
 

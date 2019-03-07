@@ -3,6 +3,8 @@ from tweepy.streaming import StreamListener
 
 from confighandler import Config
 
+import types
+
 
 class TwitterStream(Stream):
     def __init__(self, settings: dict = None):
@@ -28,8 +30,9 @@ class TwitterStream(Stream):
 
 
 class TwitterStreamListener(StreamListener):
-    def on_data(self, data):
-        pass
+    @classmethod
+    def addMethod(cls, func):
+        return setattr(cls, func.__name__, types.MethodType(func, cls))
 
     def on_error(self, status):
         print(f'Streaming API error, status code: {status}')
@@ -39,9 +42,6 @@ class TwitterStreamHandler(object):
     def __init__(self):
         self.twitter_stream = TwitterStream()
         self.twitter_stream_listener = TwitterStreamListener()
-
-    def set_write_tweet_method(self, method: callable):
-        self.twitter_stream_listener.on_data = method
 
     def start_filter(self, filter: list, use_async: bool):
         self.twitter_stream.start_filter(filter, use_async)
