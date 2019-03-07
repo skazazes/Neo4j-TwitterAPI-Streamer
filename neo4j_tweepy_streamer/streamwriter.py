@@ -11,3 +11,9 @@ class StreamWriter(object):
         else:
             self.twitter_stream_handler = TwitterStreamHandler()
             self.graph_handler = GraphHandler()
+
+        self.twitter_stream_handler.set_write_tweet_method(
+            self.graph_handler.write_tweet)
+
+
+sw = StreamWriter()

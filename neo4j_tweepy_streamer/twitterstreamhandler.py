@@ -30,9 +30,7 @@ class TwitterStream(Stream):
 
 class TwitterStreamListener(StreamListener):
     def on_data(self, data):
-        json_data = json.loads(data)
-        print(json_data)
-        return True
+        pass
 
     def on_error(self, status):
         print(f'Streaming API error, status code: {status}')
@@ -42,3 +40,6 @@ class TwitterStreamHandler(object):
     def __init__(self):
         self.twitter_stream = TwitterStream()
         self.twitter_stream_listener = TwitterStreamListener()
+
+    def set_write_tweet_method(self, method: callable):
+        self.twitter_stream_listener.on_data = method

@@ -12,3 +12,6 @@ class GraphHandler(object):
             self.graph = database.Graph(host=Config.NEO4J_HOST,
                                         auth=(Config.NEO4J_USER,
                                               Config.NEO4J_PASSWORD))
+
+    def write_tweet(self, tweet: dict):
+        print(tweet)

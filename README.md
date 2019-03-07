@@ -21,7 +21,7 @@ The graph schema is closely modeled off of the schema used in the official 'Russ
 
 2. There is a set_settings method (requires a dictionary with keys equivalent to the settings in the ini file) or individual setter methods available by importing the Config class from the confighandler module. If using this alternative method, the settings method/s must be called before initializing other package objects as they rely on these settings.
 
-3. You can supply a dictionary containing the settings with keys equivalent to the settings in the ini file directly to components that use and of the configuration options.
+3. You can supply a dictionary containing the settings with keys equivalent to the settings in the ini file directly to the GraphHandler and TwitterStreamHandler.
 
 #### Twitter
 In order to use the Twitter API, the user is required to apply as a Twitter application developer at [dev.twitter.com](https://developer.twitter.com/) (applications are instantly accepted from what I can tell), and then register an app within their developer dashboard. Once the application is created, navigate to it's 'Keys and Tokens' page and generate the required keys/tokens.
