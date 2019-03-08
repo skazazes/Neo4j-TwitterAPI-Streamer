@@ -28,6 +28,9 @@ class TwitterStream(Stream):
         else:
             self.filter(track=filter)
 
+    def stop_filter(self):
+        self.disconnect()
+
 
 class TwitterStreamListener(StreamListener):
     @classmethod
