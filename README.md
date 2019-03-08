@@ -1,5 +1,13 @@
  # Neo4J TwitterAPI Streamer
 Write tweets having to do with a list of terms to a graph database. Uses the Twitter Application API and Neo4J
+## Setup
+
+Install from PyPI
+
+```sh
+pip install nts-skazazes
+```
+
 ## Status
 Although the incoming Twitter API stream can successfully be written to a Neo4J database, there is NO error handling in the program and as such exceptions form used packages aren't properly handled and crash the program. That being said, if configured properly the pro seems to work without error.
 
