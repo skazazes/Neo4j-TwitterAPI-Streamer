@@ -25,6 +25,12 @@ class Neo4jTwitterStreamer(object):
         elif type(filter) == list:
             self.filter_list = self.filter_list + filter
 
+    def remove_filter(self, fileter: str):
+        self.filter_list.remove(fileter)
+
+    def get_filter(self) -> list:
+        return self.filter_list
+
     def start_async_stream(self):
         if not self.running:
             self.running = True
