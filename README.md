@@ -1,10 +1,10 @@
- # Neo4J Tweepy Streamer
+ # Neo4J TwitterAPI Streamer
 Write tweets having to do with a list of terms to a graph database. Uses the Twitter Application API and Neo4J
 ## Status
 Although the incoming Twitter API stream can successfully be written to a Neo4J database, there is NO error handling in the program and as such exceptions form used packages aren't properly handled and crash the program. That being said, if configured properly the pro seems to work without error.
 
 ## How NTS works
-NTS uses a Stream from the Tweepy package to receive live Tweets having to do with a specified list of terms from the Twitter Application API. NTS then adds these tweets to a Neo4J graph with related data, using the py2neo package.
+NTS uses a Tweepy 'Stream' to receive live Tweets having to do with a specified list of terms from the Twitter Application API. NTS then adds these tweets to a Neo4J graph with related data, using the py2neo package.
 
 Tweets, Users, Tweet Sources, URL's and Hashtags are all made into py2neo nodes (edges) and have relevant relationships (vertices) assigned to them before being committed to the graph. When committed, Neo4J MERGE's are used in order to aggregate all
 

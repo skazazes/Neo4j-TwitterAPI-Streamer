@@ -2,7 +2,7 @@ from twitterstreamhandler import TwitterStreamHandler, TwitterStreamListener
 from graphhandler import GraphHandler
 
 
-class StreamWriter(object):
+class Neo4jTwitterStreamer(object):
     def __init__(self, settings: dict = None):
         if settings:
             self.twitter_stream_handler = TwitterStreamHandler(
@@ -18,7 +18,7 @@ class StreamWriter(object):
         self.twitter_stream_handler.start_filter(filter, use_async)
 
 
-sw = StreamWriter()
+sw = Neo4jTwitterStreamer()
 
 # Not yet working, not sure why but its 2AM
 sw.start_filter(['eth', 'ethereum', 'btc', 'bitcoin'])
