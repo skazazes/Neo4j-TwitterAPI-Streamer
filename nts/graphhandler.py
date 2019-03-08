@@ -2,7 +2,7 @@ from py2neo import Graph, Node, Relationship
 from copy import deepcopy
 import json
 
-from confighandler import Config
+from nts.confighandler import Config
 
 
 class Deserializer(object):

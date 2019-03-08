@@ -1,7 +1,7 @@
 from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
 
-from confighandler import Config
+from nts.confighandler import Config
 
 import types
 

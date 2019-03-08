@@ -1,6 +1,8 @@
 # Ignore personal config file
 config.ini
 
+example.py
+
 
 ## Github provided gitignore items
 # Byte-compiled / optimized / DLL files

@@ -1,5 +1,7 @@
-from twitterstreamhandler import TwitterStreamHandler, TwitterStreamListener
-from graphhandler import GraphHandler
+from nts.twitterstreamhandler import (TwitterStreamHandler,
+                                      TwitterStreamListener)
+from nts.graphhandler import GraphHandler
+from nts.confighandler import Config
 
 from threading import Timer
 
@@ -7,13 +9,10 @@ from threading import Timer
 class Neo4jTwitterStreamer(object):
     def __init__(self, settings: dict = None):
         if settings:
-            self.twitter_stream_handler = TwitterStreamHandler(
-                settings=settings)
-            self.graph_handler = GraphHandler(settings=settings)
-        else:
-            self.twitter_stream_handler = TwitterStreamHandler()
-            self.graph_handler = GraphHandler()
+            Config.set_settings(settings)
 
+        self.twitter_stream_handler = TwitterStreamHandler()
+        self.graph_handler = GraphHandler()
         self.filter_list = []
         self.running = False
         self.timed = False
@@ -29,7 +28,7 @@ class Neo4jTwitterStreamer(object):
     def start_async_stream(self):
         if not self.running:
             self.running = True
-            self.twitter_stream_handler.start_filter(self.filter, True)
+            self.twitter_stream_handler.start_filter(self.filter_list, True)
         else:
             print('Stream already running')
 
@@ -54,9 +53,4 @@ class Neo4jTwitterStreamer(object):
 
     def start_blocking_stream(self):
         self.running = True
-        self.twitter_stream_handler.start_filter(self.filter, False)
-
-
-# Example
-# sw = Neo4jTwitterStreamer()
-# sw.start_filter(['eth', 'ethereum', 'btc', 'bitcoin'])
+        self.twitter_stream_handler.start_filter(self.filter_list, False)

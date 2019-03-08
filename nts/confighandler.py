@@ -1,53 +1,17 @@
-import configparser
-
-
 class Config(object):
-    # Create config parser object
-    config = configparser.ConfigParser()
+    TWITTER_API_KEY = ''
+    TWITTER_API_SECRET = ''
+    TWITTER_ACCESS_TOKEN = ''
+    TWITTER_ACCESS_TOKEN_SECRET = ''
 
-    # Attempt to open provided config file
-    try:
-        with open('../config.ini', 'r') as f:
-            config.read_file(f)
-    except FileNotFoundError:
-        print('Config Error: Config file not found!')
-        exit()
-    except configparser.MissingSectionHeaderError:
-        print(('Config Error: Config missing section header!)'))
-        exit()
-    except configparser.ParsingError:
-        print('Config Error: Config parsing error!')
-        exit()
+    NEO4J_HOST = ''
+    NEO4J_PORT = ''
+    NEO4J_USER = ''
+    NEO4J_SCHEME = ''
+    NEO4J_PASSWORD = ''
 
-    # Assign neccisary variables
-    TWITTER_API_KEY = (
-        config['Twitter API Settings']['API_KEY']
-        )
-    TWITTER_API_SECRET = (
-        config['Twitter API Settings']['API_SECRET']
-        )
-    TWITTER_ACCESS_TOKEN = (
-        config['Twitter API Settings']['ACCESS_TOKEN']
-        )
-    TWITTER_ACCESS_TOKEN_SECRET = (
-        config['Twitter API Settings']['ACCESS_TOKEN_SECRET']
-        )
-
-    NEO4J_HOST = (
-        config['Neo4J Settings']['NEO4J_HOST']
-        )
-    NEO4J_USER = (
-        config['Neo4J Settings']['NEO4J_USER']
-        )
-    NEO4J_PASSWORD = (
-        config['Neo4J Settings']['NEO4J_PASSWORD']
-        )
-    NEO4J_SCHEME = (
-        config['Neo4J Settings']['NEO4J_SCHEME']
-    )
-    NEO4J_PORT = (
-        config['Neo4J Settings']['NEO4J_PORT']
-    )
+    def __init__(self, settings: dict):
+        self.set_settings(settings)
 
     def set_settings(settings: dict):
         for key in settings:

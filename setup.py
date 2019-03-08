@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='nts-skazazes',
-    version='0.0.2',
+    version='0.0.15',
     author='Sean Kazazes',
     author_email='sean@skazazes.com',
     description=('Use the Twitter Application API '
