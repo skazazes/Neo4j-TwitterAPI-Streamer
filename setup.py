@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='nts-skazazes',
-    version='0.0.1',
+    version='0.0.2',
     author='Sean Kazazes',
     author_email='sean@skazazes.com',
     description=('Use the Twitter Application API '
@@ -14,6 +14,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     url='https://github.com/skazazes/Neo4j-TwitterAPI-Streamer',
     packages=setuptools.find_packages(),
+    install_requires=['tweepy', 'py2neo'],
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
