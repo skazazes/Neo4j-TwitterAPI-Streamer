@@ -1,5 +1,4 @@
-from nts.twitterstreamhandler import (TwitterStreamHandler,
-                                      TwitterStreamListener)
+from nts.twitterstreamhandler import TwitterStreamHandler
 from nts.graphhandler import GraphHandler
 from nts.confighandler import Config
 
@@ -7,17 +6,17 @@ from threading import Timer
 
 
 class Neo4jTwitterStreamer(object):
-    def __init__(self, settings: dict = None):
+    def __init__(self, graphhandler: GraphHandler, settings: dict = None):
         if settings:
             Config.set_settings(settings)
 
-        self.twitter_stream_handler = TwitterStreamHandler()
-        self.graph_handler = GraphHandler()
+        self.graph_handler = graphhandler
+        self.twitter_stream_handler = TwitterStreamHandler(
+            self.graph_handler.write_method)
         self.filter_list = []
         self.running = False
         self.timed = False
         self.timer = ''
-        TwitterStreamListener.addMethod(self.graph_handler.on_data)
 
     def add_filter(self, filter):
         if type(filter) == str:

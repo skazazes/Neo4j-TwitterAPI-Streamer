@@ -34,14 +34,14 @@ class Deserializer(object):
         user_node.__primarylabel__ = 'User'
         return user_node
 
-    def create_tweet_node(self, tweet) -> Node:
-        tweet_node = Node('Tweet', **tweet)
+    def create_tweet_node(self, tweet, filter_list) -> Node:
+        tweet_node = Node('Tweet', stream_filter_list=filter_list, **tweet)
         tweet_node.__primarykey__ = 'id'
         tweet_node.__primarylabel__ = 'Tweet'
         return tweet_node
 
-    def deserialize_tweet(self, origonal_tweet) -> dict:
-        tweet = deepcopy(origonal_tweet)
+    def deserialize_tweet(self, original_tweet, filter_list) -> dict:
+        tweet = deepcopy(original_tweet)
 
         # Remove unneeded dicts from tweet dict (duplicate or unused data)
         # Extract needed dicts from tweet dict, reassign tweet to tweet_data
@@ -53,19 +53,22 @@ class Deserializer(object):
             retweeted_status_dict = tweet.pop('retweeted_status')
             retweeted_status_user = (
                     self.create_user_node(
-                            {'id': retweeted_status_dict['user']['id']}
+                            {'id': retweeted_status_dict['user']['id']},
+                            filter_list
                         )
                 )
             retweeted_status = (
                     self.create_tweet_node(
-                            {'id': retweeted_status_dict['id']}
+                            {'id': retweeted_status_dict['id']},
+                            filter_list
                         )
                 )
         if 'quoted_status' in tweet:
             quoted_status_dict = tweet.pop('quoted_status')
             quoted_status = (
                     self.create_tweet_node(
-                        {'id': quoted_status_dict['id']}
+                        {'id': quoted_status_dict['id']},
+                        filter_list
                     )
                 )
             del tweet['quoted_status_permalink']
@@ -102,7 +105,7 @@ class Deserializer(object):
 
         # Create user and tweet nodes from dictionaries
         user_node = self.create_user_node(user_data)
-        tweet_node = self.create_tweet_node(tweet)
+        tweet_node = self.create_tweet_node(tweet, filter_list)
 
         # Prep final nodes dict
         nodes_dict = {
@@ -147,12 +150,13 @@ class GraphHandler(object):
                                auth=(Config.NEO4J_USER,
                                      Config.NEO4J_PASSWORD))
 
-    def on_data(self, extra, tweet):
-        self.write_tweet_and_subtweets(json.loads(tweet))
+    def on_data(self, tweet, filter_list):
+        self.write_tweet_and_subtweets(json.loads(tweet), filter_list)
         return True
 
     def write_tweet_and_subtweets(self,
                                   tweet,
+                                  filter_list,
                                   check_retweet: bool = True,
                                   check_quote_tweet: bool = False):
         # Go to deepest tweet, recall on self if current tweet is deepest
@@ -171,10 +175,11 @@ class GraphHandler(object):
             else:
                 self.write_tweet_and_subtweets(tweet, False, False)
         else:
-            self.write_tweet(tweet)
+            self.write_tweet(tweet, filter_list)
 
-    def write_tweet(self, tweet: dict):
-        tweet_nodes = GraphHandler.deserializer.deserialize_tweet(tweet)
+    def write_tweet(self, tweet: dict, filter_list):
+        tweet_nodes = GraphHandler.deserializer.deserialize_tweet(tweet,
+                                                                  filter_list)
 
         # User POSTED Tweet
         self.graph.merge(
