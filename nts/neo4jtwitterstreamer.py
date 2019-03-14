@@ -12,7 +12,7 @@ class Neo4jTwitterStreamer(object):
 
         self.graph_handler = graphhandler
         self.twitter_stream_handler = TwitterStreamHandler(
-            self.graph_handler.write_method)
+            self.graph_handler.on_data)
         self.filter_list = []
         self.running = False
         self.timed = False
@@ -51,8 +51,8 @@ class Neo4jTwitterStreamer(object):
         if not self.running:
             self.start_async_stream()
             self.timed = True
-            t = Timer(time, self.stop_async_stream)
-            t.start()
+            self.timer = Timer(time, self.stop_async_stream)
+            self.timer.start()
         else:
             print('Stream already running')
 

@@ -50,7 +50,10 @@ class TwitterStream(Stream):
 class TwitterStreamHandler(object):
     def __init__(self, write_method: callable):
         self.twitter_listener = TwitterStreamListener(write_method)
-        self.twitter_stream = TwitterStream()
+        self.twitter_stream = TwitterStream(self.twitter_listener)
 
     def start_filter(self, filter: list, use_async: bool):
         self.twitter_stream.start_filter(filter, use_async)
+
+    def stop_filter(self):
+        self.twitter_stream.stop_filter()

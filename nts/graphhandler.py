@@ -53,8 +53,7 @@ class Deserializer(object):
             retweeted_status_dict = tweet.pop('retweeted_status')
             retweeted_status_user = (
                     self.create_user_node(
-                            {'id': retweeted_status_dict['user']['id']},
-                            filter_list
+                            {'id': retweeted_status_dict['user']['id']}
                         )
                 )
             retweeted_status = (
@@ -143,6 +142,7 @@ class GraphHandler(object):
                                host=settings['NEO4J_HOST'],
                                auth=(settings['NEO4J_USER'],
                                      settings['NEO4J_PASSWORD']))
+            print('Graph Connected')
         else:
             self.graph = Graph(scheme=Config.NEO4J_SCHEME,
                                port=Config.NEO4J_PORT,
@@ -151,7 +151,8 @@ class GraphHandler(object):
                                      Config.NEO4J_PASSWORD))
 
     def on_data(self, tweet, filter_list):
-        self.write_tweet_and_subtweets(json.loads(tweet), filter_list)
+        tweet_json = json.loads(tweet)
+        self.write_tweet_and_subtweets(tweet_json, filter_list)
         return True
 
     def write_tweet_and_subtweets(self,
@@ -161,19 +162,26 @@ class GraphHandler(object):
                                   check_quote_tweet: bool = False):
         # Go to deepest tweet, recall on self if current tweet is deepest
         if check_retweet:
+            # If tweet is a retweet
             if 'retweeted_status' in tweet:
-                self.write_tweet_and_subtweets(tweet['retweeted_status'],
-                                               True, True)
-                self.write_tweet_and_subtweets(tweet, False, True)
+                # Call recursive method on retweeted tweet
+                self.write_tweet_and_subtweets(
+                    tweet['retweeted_status'], filter_list, True, True)
+                # Once recursion on subtweet is completed,
+                self.write_tweet_and_subtweets(
+                    tweet, filter_list, False, True)
             else:
-                self.write_tweet_and_subtweets(tweet, False, True)
+                self.write_tweet_and_subtweets(
+                    tweet, filter_list, False, True)
         elif check_quote_tweet:
             if 'quoted_status' in tweet:
-                self.write_tweet_and_subtweets(tweet['quoted_status'],
-                                               True, False)
-                self.write_tweet_and_subtweets(tweet, False, False)
+                self.write_tweet_and_subtweets(
+                    tweet['quoted_status'], filter_list, True, False)
+                self.write_tweet_and_subtweets(
+                    tweet, filter_list, False, False)
             else:
-                self.write_tweet_and_subtweets(tweet, False, False)
+                self.write_tweet_and_subtweets(
+                    tweet, filter_list, False, False)
         else:
             self.write_tweet(tweet, filter_list)
 
