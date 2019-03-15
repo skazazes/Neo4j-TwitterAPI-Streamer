@@ -9,7 +9,7 @@ pip install nts-skazazes
 ```
 
 ## Status
-Although the incoming Twitter API stream can successfully be written to a Neo4J database, there is NO error handling in the program and as such exceptions form used packages aren't properly handled and crash the program. That being said, if configured properly the pro seems to work without error.
+Although the incoming Twitter API stream can successfully be written to a Neo4J database, there is NO error handling in the program and as such exceptions fromm used packages aren't properly handled and crash the program. Once intended ffeatures are implemented I will begin working on fixes.
 
 ## How NTS works
 NTS uses a Tweepy 'Stream' to receive live Tweets having to do with a specified list of terms from the Twitter Application API. NTS then adds these tweets to a Neo4J graph with related data, using the py2neo package.
